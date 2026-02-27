@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title CollateralVault
- * @notice Manages BNB collateral locks for the TrustPay BNPL protocol.
+ * @notice Manages BNB collateral locks for the NexaPay BNPL protocol.
  *         Enforces a strict 150% collateral ratio.
  */
 contract CollateralVault is ReentrancyGuard, Ownable {

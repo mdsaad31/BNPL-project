@@ -82,7 +82,7 @@ export default function NFTLoans() {
               <IconDiamond size={24} color="white" />
             </div>
             <div>
-              <div style={{ fontWeight: 700, fontSize: 16, color: theme.text }}>TrustPay Demo NFT (TPNFT)</div>
+              <div style={{ fontWeight: 700, fontSize: 16, color: theme.text }}>NexaPay Demo NFT (NPNFT)</div>
               <div style={{ fontSize: 13, color: theme.text2 }}>Approved Collection</div>
             </div>
           </div>

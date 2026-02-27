@@ -1,7 +1,7 @@
 {
-  "name": "trustpay-contracts",
+  "name": "nexapay-contracts",
   "version": "1.0.0",
-  "description": "TrustPay Protocol Smart Contracts",
+  "description": "NexaPay Protocol Smart Contracts",
   "scripts": {
     "compile": "npx hardhat compile",
     "test": "npx hardhat test",

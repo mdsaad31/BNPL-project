@@ -1,5 +1,5 @@
 # ============================================================
-# TrustPay Protocol — Docker Compose
+# NexaPay Protocol — Docker Compose
 # ============================================================
 # Usage:
 #   docker compose up --build          Start all services
@@ -21,7 +21,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: hardhat-node
-    container_name: trustpay-hardhat
+    container_name: nexapay-hardhat
     ports:
       - "8545:8545"
     healthcheck:
@@ -38,7 +38,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: hardhat-node
-    container_name: trustpay-deploy
+    container_name: nexapay-deploy
     depends_on:
       hardhat:
         condition: service_healthy
@@ -53,7 +53,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: frontend
-    container_name: trustpay-frontend
+    container_name: nexapay-frontend
     ports:
       - "3000:80"
     depends_on:

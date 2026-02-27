@@ -65,7 +65,7 @@ export default function Navbar() {
             <span style={{ color: 'white', fontWeight: 800, fontSize: isMobile ? 15 : 18 }}>T</span>
           </div>
           <div>
-            <div style={{ fontWeight: 700, fontSize: isMobile ? 15 : 17, color: theme.text, letterSpacing: '-0.02em' }}>TrustPay</div>
+            <div style={{ fontWeight: 700, fontSize: isMobile ? 15 : 17, color: theme.text, letterSpacing: '-0.02em' }}>NexaPay</div>
             {!isMobile && <div style={{ fontSize: 11, color: theme.text3, marginTop: -2 }}>BNPL Protocol</div>}
           </div>
         </Link>

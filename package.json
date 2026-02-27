@@ -1,7 +1,7 @@
 {
-  "name": "trustpay-protocol",
+  "name": "nexapay-protocol",
   "version": "1.0.0",
-  "description": "TrustPay - Non-custodial Web3 BNPL protocol on BNB Chain",
+  "description": "NexaPay - Non-custodial Web3 BNPL protocol on BNB Chain",
   "private": true,
   "scripts": {
     "compile": "cd contracts && npx hardhat compile",
@@ -12,6 +12,6 @@
     "build": "cd frontend && npm run build"
   },
   "keywords": ["bnpl", "web3", "bnb-chain", "defi"],
-  "author": "TrustPay Team",
+  "author": "NexaPay Team",
   "license": "MIT"
 }

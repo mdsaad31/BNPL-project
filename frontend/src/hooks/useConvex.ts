@@ -4,7 +4,7 @@ import { useWeb3 } from "../context/Web3Context";
 import { useCallback } from "react";
 
 /**
- * Hook providing Convex database operations for the TrustPay platform.
+ * Hook providing Convex database operations for the NexaPay platform.
  * Connects on-chain events to off-chain persistent storage.
  */
 export function useConvex() {

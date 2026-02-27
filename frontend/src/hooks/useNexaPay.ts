@@ -81,8 +81,8 @@ function mapLoan(raw: Record<string, unknown>): Loan {
   };
 }
 
-// ─── Hook: useTrustPay ──────────────────────────────────
-export function useTrustPay() {
+// ─── Hook: useNexaPay ────────────────────────────────────
+export function useNexaPay() {
   const { signer, address } = useWeb3();
   const [products, setProducts] = useState<Product[]>([]);
   const [buyerLoans, setBuyerLoans] = useState<Loan[]>([]);

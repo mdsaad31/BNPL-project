@@ -146,10 +146,10 @@ export default function Landing() {
       </section>
 
       {/* ══════════════════════════════════════════════════
-          WHY TRUSTPAY
+          WHY NEXAPAY
           ══════════════════════════════════════════════════ */}
       <section>
-        <SectionHeader num="01" title="Why TrustPay?" subtitle="Because someone had to bring BNPL to Web3, and credit cards are so last century." />
+        <SectionHeader num="01" title="Why NexaPay?" subtitle="Because someone had to bring BNPL to Web3, and credit cards are so last century." />
 
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))', gap: isMobile ? 16 : 24, marginTop: isMobile ? 32 : 48 }}>
           {[

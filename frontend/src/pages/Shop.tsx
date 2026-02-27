@@ -3,7 +3,7 @@ import { formatEther } from 'ethers';
 import { useWeb3 } from '../context/Web3Context';
 import { useTheme } from '../context/ThemeContext';
 import { useResponsive } from '../hooks/useResponsive';
-import { useTrustPay, type Product } from '../hooks/useTrustPay';
+import { useNexaPay, type Product } from '../hooks/useNexaPay';
 import { COLLATERAL_RATIO } from '../contracts';
 import { IconCart, IconConstruction, IconPackage, IconAlert, IconX } from '../components/Icons';
 
@@ -11,7 +11,7 @@ export default function Shop() {
   const { address } = useWeb3();
   const { theme } = useTheme();
   const { isMobile } = useResponsive();
-  const { products: allProducts, purchaseProduct, txPending, loading } = useTrustPay();
+  const { products: allProducts, purchaseProduct, txPending, loading } = useNexaPay();
   const products = allProducts.filter(p => p.active);
   const [selected, setSelected] = useState<Product | null>(null);
   const [showModal, setShowModal] = useState(false);

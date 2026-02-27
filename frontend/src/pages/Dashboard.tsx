@@ -3,7 +3,7 @@ import { formatEther } from 'ethers';
 import { useWeb3 } from '../context/Web3Context';
 import { useTheme } from '../context/ThemeContext';
 import { useResponsive } from '../hooks/useResponsive';
-import { useTrustPay, LoanStatus, type Loan } from '../hooks/useTrustPay';
+import { useNexaPay, LoanStatus, type Loan } from '../hooks/useNexaPay';
 import { useNFTLoan, NFTLoanStatus, type NFTLoan } from '../hooks/useNFTLoan';
 import {
   IconWallet, IconChart, IconClipboard, IconBolt, IconCheck,
@@ -14,7 +14,7 @@ export default function Dashboard() {
   const { address } = useWeb3();
   const { theme } = useTheme();
   const { isMobile } = useResponsive();
-  const { buyerLoans, payInstallment, triggerDefault, claimCollateral, txPending: bnplPending, loading: bnplLoading } = useTrustPay();
+  const { buyerLoans, payInstallment, triggerDefault, claimCollateral, txPending: bnplPending, loading: bnplLoading } = useNexaPay();
   const nftLoan = useNFTLoan();
   const [tab, setTab] = useState<'bnpl' | 'nft'>('bnpl');
 

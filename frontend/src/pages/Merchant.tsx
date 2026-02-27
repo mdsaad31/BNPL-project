@@ -3,7 +3,7 @@ import { formatEther } from 'ethers';
 import { useWeb3 } from '../context/Web3Context';
 import { useTheme } from '../context/ThemeContext';
 import { useResponsive } from '../hooks/useResponsive';
-import { useTrustPay, LoanStatus, type Loan, type Product } from '../hooks/useTrustPay';
+import { useNexaPay, LoanStatus, type Loan, type Product } from '../hooks/useNexaPay';
 import { useNFTLoan } from '../hooks/useNFTLoan';
 import {
   IconStore, IconPackage, IconBolt, IconCheck, IconCoins,
@@ -18,7 +18,7 @@ export default function Merchant() {
   const {
     isMerchant, merchantName, merchantLoans, products,
     registerMerchant, createProduct, toggleProduct, txPending, loading,
-  } = useTrustPay();
+  } = useNexaPay();
   const nftLoan = useNFTLoan();
 
   if (!address) {
@@ -367,7 +367,7 @@ function NFTsTab({ nftLoan, txPending }: { nftLoan: NFTHookReturn; txPending: bo
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
             <IconDiamond size={22} color={theme.mode === 'dark' ? '#818CF8' : '#6366F1'} />
-            <h3 style={{ fontSize: 17, fontWeight: 700, color: theme.text }}>TrustPay Demo NFT Collection</h3>
+            <h3 style={{ fontSize: 17, fontWeight: 700, color: theme.text }}>NexaPay Demo NFT Collection</h3>
             {nftLoan.collectionInfo.approved && (
               <span style={{ padding: '3px 10px', borderRadius: 20, fontSize: 11, fontWeight: 600, background: theme.okBg, color: theme.ok }}>Approved</span>
             )}

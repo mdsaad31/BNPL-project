@@ -58,7 +58,7 @@ export default function Layout() {
             >
               <span style={{ color: 'white', fontWeight: 700, fontSize: 14 }}>T</span>
             </div>
-            <span style={{ fontWeight: 700, color: theme.text, fontSize: 15 }}>TrustPay</span>
+            <span style={{ fontWeight: 700, color: theme.text, fontSize: 15 }}>NexaPay</span>
             {!isMobile && (
               <>
                 <span style={{ color: theme.line }}>|</span>
@@ -71,7 +71,7 @@ export default function Layout() {
               Built with mass amounts of caffeine and impeccable smart contracts.
             </p>
           )}
-          <p style={{ fontSize: 12, color: theme.text3 }}>© 2026 TrustPay</p>
+          <p style={{ fontSize: 12, color: theme.text3 }}>© 2026 NexaPay</p>
         </div>
       </footer>
 

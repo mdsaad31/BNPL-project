@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 async function main() {
-  console.log("🚀 Deploying TrustPay Protocol...\n");
+  console.log("🚀 Deploying NexaPay Protocol...\n");
 
   const [deployer] = await hre.ethers.getSigners();
   console.log(`📋 Deployer: ${deployer.address}`);
@@ -38,7 +38,7 @@ async function main() {
 
   // Deploy MockNFT for demo
   const MockNFTFactory = await hre.ethers.getContractFactory("MockNFT");
-  const mockNFT = await MockNFTFactory.deploy("TrustPay Demo NFT", "TPNFT");
+  const mockNFT = await MockNFTFactory.deploy("NexaPay Demo NFT", "NPNFT");
   await mockNFT.waitForDeployment();
   const mockNFTAddr = await mockNFT.getAddress();
   console.log(`✅ MockNFT deployed to:           ${mockNFTAddr}`);

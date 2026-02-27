@@ -80,6 +80,18 @@ contract BNPLLoan is ReentrancyGuard, Ownable {
     /// @notice Accept BNB deposits for the protocol treasury.
     receive() external payable {}
 
+    /// @notice Owner can withdraw from the protocol treasury.
+    function withdrawTreasury(uint256 amount) external onlyOwner {
+        require(address(this).balance >= amount, "BNPL: insufficient treasury");
+        (bool s,) = payable(owner()).call{value: amount}("");
+        require(s, "BNPL: withdraw failed");
+    }
+
+    /// @notice Check how much BNB the treasury holds.
+    function treasuryBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
+
     // ─── Merchant Functions ──────────────────────────────────
 
     function registerMerchant(string calldata name) external {

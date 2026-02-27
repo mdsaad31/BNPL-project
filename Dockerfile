@@ -1,5 +1,5 @@
 # ============================================================
-# TrustPay Protocol — Docker Configuration
+# NexaPay Protocol — Docker Configuration
 # Multi-service: Hardhat node + Frontend (Nginx)
 # ============================================================
 

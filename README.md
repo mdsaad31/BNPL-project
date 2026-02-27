@@ -1,4 +1,4 @@
-# TrustPay Protocol
+# NexaPay Protocol
 
 > Non-custodial Web3 BNPL (Buy Now, Pay Later) protocol on BNB Chain.
 

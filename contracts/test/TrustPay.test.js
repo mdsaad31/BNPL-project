@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const { time } = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 
-describe("TrustPay Protocol", function () {
+describe("NexaPay Protocol", function () {
   let vault, bnpl;
   let owner, merchant, buyer, outsider;
   const PRODUCT_PRICE = ethers.parseEther("1.0"); // 1 BNB

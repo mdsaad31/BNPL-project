@@ -143,14 +143,14 @@ const ThemeContext = createContext<ThemeCtx>({
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [isDark, setIsDark] = useState(() => {
     try {
-      return localStorage.getItem('trustpay-theme') === 'dark';
+      return localStorage.getItem('nexapay-theme') === 'dark';
     } catch {
       return false;
     }
   });
 
   useEffect(() => {
-    localStorage.setItem('trustpay-theme', isDark ? 'dark' : 'light');
+    localStorage.setItem('nexapay-theme', isDark ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
   }, [isDark]);
 
