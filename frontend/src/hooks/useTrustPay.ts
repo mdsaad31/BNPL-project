@@ -37,6 +37,7 @@ export interface Loan {
   nextDueTimestamp: number;
   createdAt: number;
   status: LoanStatus;
+  collateralLocked: boolean;
 }
 
 // ─── Contract Getters ───────────────────────────────────
@@ -76,6 +77,7 @@ function mapLoan(raw: Record<string, unknown>): Loan {
     nextDueTimestamp: Number(raw.nextDueTimestamp),
     createdAt: Number(raw.createdAt),
     status: Number(raw.status) as LoanStatus,
+    collateralLocked: false, // set after vault query
   };
 }
 
@@ -112,7 +114,14 @@ export function useTrustPay() {
       const loans = await Promise.all(
         loanIds.map(async (id) => {
           const raw = await contract.getLoan(id);
-          return mapLoan(raw);
+          const loan = mapLoan(raw);
+          // Check if collateral is still locked in vault
+          try {
+            const vault = getVaultContract(provider);
+            const [, , locked] = await vault.getCollateral(address, id);
+            loan.collateralLocked = locked as boolean;
+          } catch { loan.collateralLocked = false; }
+          return loan;
         })
       );
       setBuyerLoans(loans);
@@ -248,6 +257,20 @@ export function useTrustPay() {
     }
   }, [signer, fetchBuyerLoans]);
 
+  // ─── Write: Claim Collateral ──────────────────────────
+  const claimCollateral = useCallback(async (loanId: number) => {
+    if (!signer) throw new Error('Wallet not connected');
+    setTxPending(true);
+    try {
+      const contract = getBNPLContract(signer);
+      const tx = await contract.claimCollateral(loanId);
+      await tx.wait();
+      await fetchBuyerLoans();
+    } finally {
+      setTxPending(false);
+    }
+  }, [signer, fetchBuyerLoans]);
+
   // ─── Get Collateral Info ──────────────────────────────
   const getCollateralInfo = useCallback(async (buyerAddr: string, loanId: number) => {
     const provider = getReadOnlyProvider();
@@ -287,6 +310,7 @@ export function useTrustPay() {
     purchaseProduct,
     payInstallment,
     triggerDefault,
+    claimCollateral,
     getCollateralInfo,
   };
 }

@@ -50,9 +50,14 @@ async function main() {
   console.log(`🖼️  MockNFT approved as collateral (floor: 0.05 BNB)`);
 
   // Fund NFT loan treasury with 0.1 BNB (testnet-friendly)
-  const treasuryTx = await nftLoan.depositToTreasury({ value: hre.ethers.parseEther("0.1") });
-  await treasuryTx.wait();
+  const nftTreasuryTx = await nftLoan.depositToTreasury({ value: hre.ethers.parseEther("0.1") });
+  await nftTreasuryTx.wait();
   console.log(`💰 NFT Loan treasury funded with 0.1 BNB`);
+
+  // Fund BNPL treasury with 0.1 BNB (merchant instant payouts)
+  const bnplTreasuryTx = await deployer.sendTransaction({ to: bnplAddr, value: hre.ethers.parseEther("0.1") });
+  await bnplTreasuryTx.wait();
+  console.log(`💰 BNPL treasury funded with 0.1 BNB`);
 
   console.log("\n─────────────────────────────────────────────");
   console.log("📋 Deployment Summary");

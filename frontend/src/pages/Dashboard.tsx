@@ -14,7 +14,7 @@ export default function Dashboard() {
   const { address } = useWeb3();
   const { theme } = useTheme();
   const { isMobile } = useResponsive();
-  const { buyerLoans, payInstallment, triggerDefault, txPending: bnplPending, loading: bnplLoading } = useTrustPay();
+  const { buyerLoans, payInstallment, triggerDefault, claimCollateral, txPending: bnplPending, loading: bnplLoading } = useTrustPay();
   const nftLoan = useNFTLoan();
   const [tab, setTab] = useState<'bnpl' | 'nft'>('bnpl');
 
@@ -98,6 +98,7 @@ export default function Dashboard() {
                   loan={loan}
                   onPay={() => payInstallment(loan.id, loan.installmentAmount)}
                   onDefault={() => triggerDefault(loan.id)}
+                  onClaim={() => claimCollateral(loan.id)}
                   txPending={txPending}
                 />
               ))}
@@ -215,10 +216,11 @@ function StatCard({ Icon, label, value, color, bg }: { Icon: React.FC<{ size?: n
 
 /* ── BNPL Loan Card ──────────────────────────────────────── */
 
-function LoanCard({ loan, onPay, onDefault, txPending }: {
+function LoanCard({ loan, onPay, onDefault, onClaim, txPending }: {
   loan: Loan;
   onPay: () => void;
   onDefault: () => void;
+  onClaim: () => void;
   txPending: boolean;
 }) {
   const { theme } = useTheme();
@@ -315,6 +317,32 @@ function LoanCard({ loan, onPay, onDefault, txPending }: {
                 Liquidate
               </button>
             )}
+          </div>
+        )}
+
+        {/* Claim Collateral - shown when loan is repaid and collateral still locked */}
+        {isRepaid && loan.collateralLocked && (
+          <button onClick={onClaim} disabled={txPending} style={{
+            width: '100%', padding: '16px 0', borderRadius: 14, border: 'none',
+            background: txPending ? theme.line : 'linear-gradient(135deg, #059669, #10B981)',
+            color: txPending ? theme.text3 : 'white',
+            fontWeight: 700, fontSize: 15, cursor: txPending ? 'not-allowed' : 'pointer',
+            fontFamily: "'Inter', sans-serif",
+            boxShadow: txPending ? 'none' : '0 4px 16px rgba(16,185,129,0.3)',
+            letterSpacing: '0.02em',
+          }}>
+            {txPending ? 'Processing...' : '🎉 Claim Collateral — Get Your BNB Back!'}
+          </button>
+        )}
+
+        {/* Already claimed */}
+        {isRepaid && !loan.collateralLocked && (
+          <div style={{
+            textAlign: 'center', padding: '14px', borderRadius: 12,
+            background: theme.okBg, color: theme.ok,
+            fontSize: 14, fontWeight: 600,
+          }}>
+            ✓ Collateral Claimed Successfully
           </div>
         )}
       </div>

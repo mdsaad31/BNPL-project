@@ -69,11 +69,16 @@ contract BNPLLoan is ReentrancyGuard, Ownable {
     event InstallmentPaid(uint256 indexed loanId, address indexed buyer, uint8 installmentNumber, uint256 amount);
     event LoanRepaid(uint256 indexed loanId, address indexed buyer);
     event LoanDefaulted(uint256 indexed loanId, address indexed buyer);
+    event CollateralClaimed(uint256 indexed loanId, address indexed buyer, uint256 amount);
+    event MerchantPaid(uint256 indexed loanId, address indexed merchant, uint256 amount);
 
     // ─── Constructor ─────────────────────────────────────────
     constructor(address _vault) Ownable(msg.sender) {
         vault = CollateralVault(_vault);
     }
+
+    /// @notice Accept BNB deposits for the protocol treasury.
+    receive() external payable {}
 
     // ─── Merchant Functions ──────────────────────────────────
 
@@ -138,10 +143,11 @@ contract BNPLLoan is ReentrancyGuard, Ownable {
         // Lock collateral in vault
         vault.lockCollateral{value: msg.value}(msg.sender, loanId, p.price);
 
-        // Pay merchant instantly from contract — protocol guarantees the merchant
-        // In the MVP, we pay the merchant from a simple funding mechanism
-        // The collateral secures the buyer's repayment obligation
-        // For the hackathon, merchant payment is "guaranteed" by the collateral lock
+        // Pay merchant instantly from protocol treasury
+        require(address(this).balance >= p.price, "BNPL: insufficient treasury");
+        (bool merchantPaid,) = payable(p.merchant).call{value: p.price}("");
+        require(merchantPaid, "BNPL: merchant payment failed");
+        emit MerchantPaid(loanId, p.merchant, p.price);
 
         loans[loanId] = Loan({
             id: loanId,
@@ -177,16 +183,13 @@ contract BNPLLoan is ReentrancyGuard, Ownable {
         loan.installmentsPaid++;
         loan.totalRepaid += msg.value;
 
-        // Forward installment to merchant
-        (bool success,) = payable(loan.merchant).call{value: msg.value}("");
-        require(success, "BNPL: merchant payment failed");
+        // Installment stays in contract treasury (merchant was already paid on purchase)
 
         emit InstallmentPaid(loanId, msg.sender, loan.installmentsPaid, msg.value);
 
         if (loan.installmentsPaid >= NUM_INSTALLMENTS) {
-            // Fully repaid — release collateral
+            // Fully repaid — buyer must call claimCollateral() separately
             loan.status = LoanStatus.REPAID;
-            vault.releaseCollateral(msg.sender, loanId);
             emit LoanRepaid(loanId, msg.sender);
         } else {
             // Set next due date
@@ -209,14 +212,26 @@ contract BNPLLoan is ReentrancyGuard, Ownable {
 
         loan.status = LoanStatus.DEFAULTED;
 
-        // Calculate outstanding debt
+        // Calculate outstanding debt owed to protocol treasury
         uint256 remainingInstallments = NUM_INSTALLMENTS - loan.installmentsPaid;
         uint256 outstandingDebt = remainingInstallments * loan.installmentAmount;
 
-        // Liquidate collateral: pay merchant remaining debt, refund excess to buyer
-        vault.liquidateCollateral(loan.buyer, loanId, loan.merchant, outstandingDebt);
+        // Liquidate collateral: recover outstanding to treasury, refund excess to buyer
+        vault.liquidateCollateral(loan.buyer, loanId, address(this), outstandingDebt);
 
         emit LoanDefaulted(loanId, loan.buyer);
+    }
+
+    /**
+     * @notice Claim collateral back after fully repaying a loan.
+     * @param loanId The loan identifier.
+     */
+    function claimCollateral(uint256 loanId) external nonReentrant {
+        Loan storage loan = loans[loanId];
+        require(loan.buyer == msg.sender, "BNPL: not your loan");
+        require(loan.status == LoanStatus.REPAID, "BNPL: loan not repaid");
+        vault.releaseCollateral(msg.sender, loanId);
+        emit CollateralClaimed(loanId, msg.sender, 0); // amount logged by vault event
     }
 
     // ─── View Functions ──────────────────────────────────────
