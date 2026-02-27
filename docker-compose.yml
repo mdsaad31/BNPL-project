@@ -1,0 +1,62 @@
+# ============================================================
+# TrustPay Protocol — Docker Compose
+# ============================================================
+# Usage:
+#   docker compose up --build          Start all services
+#   docker compose up --build -d       Start in background
+#   docker compose down                Stop all services
+#
+# After starting, run the deploy script:
+#   docker compose exec hardhat npx hardhat run scripts/deploy.js --network localhost
+#
+# Services:
+#   - hardhat:  Local EVM node at http://localhost:8545
+#   - frontend: React app at http://localhost:3000
+# ============================================================
+
+services:
+  # ── Hardhat Local Node ─────────────────────────────────────
+  hardhat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: hardhat-node
+    container_name: trustpay-hardhat
+    ports:
+      - "8545:8545"
+    healthcheck:
+      test: ["CMD", "/healthcheck.sh"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 15s
+    restart: unless-stopped
+
+  # ── Deploy Contracts (one-shot) ────────────────────────────
+  deploy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: hardhat-node
+    container_name: trustpay-deploy
+    depends_on:
+      hardhat:
+        condition: service_healthy
+    entrypoint: >
+      sh -c "npx hardhat run scripts/deploy.js --network localhost"
+    environment:
+      - HARDHAT_NETWORK_URL=http://hardhat:8545
+
+  # ── Frontend (Nginx) ──────────────────────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frontend
+    container_name: trustpay-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      hardhat:
+        condition: service_healthy
+    restart: unless-stopped

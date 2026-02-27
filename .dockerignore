@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+contracts/node_modules/
+frontend/node_modules/
+
+# Build outputs
+frontend/dist/
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+
+# Version control
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files (prevent recursive copy)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+README.md
+LICENSE
+*.md
