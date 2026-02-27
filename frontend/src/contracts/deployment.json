@@ -2,11 +2,11 @@
   "network": "bscTestnet",
   "chainId": "97",
   "contracts": {
-    "CollateralVault": "0xf9Da9051358b53Ca506DD4e819299dC576C82b06",
-    "BNPLLoan": "0x6f171f3060c36C223247316607Cd9C3BA032415D",
-    "NFTCollateralLoan": "0x1c6798F85E1DcA342d1eAf16d36B61a265e0d103",
-    "MockNFT": "0xBd80EF4E360962690192512c298aD02db7a5ddaB"
+    "CollateralVault": "0x76Bd629f22ee03762490559BF528033206AD878c",
+    "BNPLLoan": "0xF0f5B50fc5f892E3cEd6C16A228a4104FA9bcAf0",
+    "NFTCollateralLoan": "0x34fc01159cad4f5BA5f0CdE23E41D21011581C5b",
+    "MockNFT": "0x3808Ecd5Dfb2E74C96B75D7E1994e783e5c359E2"
   },
   "owner": "0x9c713a7AF5B1c3Fc58F93bCc4660612af0C50Dc1",
-  "deployedAt": "2026-02-27T21:58:54.455Z"
+  "deployedAt": "2026-02-27T23:22:01.755Z"
 }
