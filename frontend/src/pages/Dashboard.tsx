@@ -14,7 +14,7 @@ export default function Dashboard() {
   const { address } = useWeb3();
   const { theme } = useTheme();
   const { isMobile } = useResponsive();
-  const { buyerLoans, payInstallment, triggerDefault, claimCollateral, txPending: bnplPending, loading: bnplLoading } = useNexaPay();
+  const { buyerLoans, payInstallment, triggerDefault, claimCollateral, txPending: bnplPending, loading: bnplLoading, treasuryBalance: bnplTreasury } = useNexaPay();
   const nftLoan = useNFTLoan();
   const [tab, setTab] = useState<'bnpl' | 'nft'>('bnpl');
 
@@ -61,6 +61,7 @@ export default function Dashboard() {
         <StatCard Icon={IconBolt} label="Active" value={active.length} color={theme.brand} bg={theme.warnBg} />
         <StatCard Icon={IconCheck} label="Repaid" value={repaid.length} color={theme.ok} bg={theme.okBg} />
         <StatCard Icon={IconSkull} label="Defaulted" value={defaulted.length} color={theme.err} bg={theme.errBg} />
+        <StatCard Icon={IconBank} label="BNPL Treasury" value={`${parseFloat(bnplTreasury).toFixed(2)} BNB`} color={theme.navy} bg={theme.infoBg} />
         <StatCard Icon={IconNFT} label="NFT Loans" value={nftLoan.loans.length} color={theme.mode === 'dark' ? '#F472B6' : '#DB2777'} bg={theme.mode === 'dark' ? 'rgba(219,39,119,0.12)' : '#FDF2F8'} />
         <StatCard Icon={IconDiamond} label="Owned NFTs" value={nftLoan.ownedNFTs.length} color={theme.mode === 'dark' ? '#818CF8' : '#6366F1'} bg={theme.mode === 'dark' ? 'rgba(99,102,241,0.12)' : '#EEF2FF'} />
       </div>
@@ -190,7 +191,7 @@ function EmptyState({ icon, title, message }: { icon: React.ReactNode; title: st
 
 /* ── Stat Card ───────────────────────────────────────────── */
 
-function StatCard({ Icon, label, value, color, bg }: { Icon: React.FC<{ size?: number; color?: string }>; label: string; value: number; color: string; bg: string }) {
+function StatCard({ Icon, label, value, color, bg }: { Icon: React.FC<{ size?: number; color?: string }>; label: string; value: number | string; color: string; bg: string }) {
   const { theme } = useTheme();
   const { isMobile } = useResponsive();
   return (

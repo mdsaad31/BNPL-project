@@ -91,6 +91,19 @@ export function useNexaPay() {
   const [merchantName, setMerchantName] = useState('');
   const [loading, setLoading] = useState(false);
   const [txPending, setTxPending] = useState(false);
+  const [treasuryBalance, setTreasuryBalance] = useState<string>('0');
+
+  // ─── Read Treasury Balance ────────────────────────────
+  const fetchTreasuryBalance = useCallback(async () => {
+    try {
+      const provider = getReadOnlyProvider();
+      const contract = getBNPLContract(provider);
+      const bal = await contract.treasuryBalance();
+      setTreasuryBalance(formatEther(bal));
+    } catch (err) {
+      console.error('Failed to fetch BNPL treasury balance:', err);
+    }
+  }, []);
 
   // ─── Read Products ────────────────────────────────────
   const fetchProducts = useCallback(async () => {
@@ -287,9 +300,9 @@ export function useNexaPay() {
   // ─── Auto-fetch on address change ─────────────────────
   useEffect(() => {
     setLoading(true);
-    Promise.all([fetchProducts(), checkMerchantStatus(), fetchBuyerLoans(), fetchMerchantLoans()])
+    Promise.all([fetchProducts(), checkMerchantStatus(), fetchBuyerLoans(), fetchMerchantLoans(), fetchTreasuryBalance()])
       .finally(() => setLoading(false));
-  }, [address, fetchProducts, checkMerchantStatus, fetchBuyerLoans, fetchMerchantLoans]);
+  }, [address, fetchProducts, checkMerchantStatus, fetchBuyerLoans, fetchMerchantLoans, fetchTreasuryBalance]);
 
   return {
     // State
@@ -300,6 +313,7 @@ export function useNexaPay() {
     merchantName,
     loading,
     txPending,
+    treasuryBalance,
     // Actions
     fetchProducts,
     fetchBuyerLoans,
