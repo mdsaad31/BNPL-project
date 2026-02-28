@@ -46,6 +46,13 @@ export const Web3Provider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const connect = useCallback(async () => {
     if (typeof window.ethereum === 'undefined') {
+      // Mobile deep-link: open the current page inside MetaMask's in-app browser
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobile) {
+        const dappUrl = window.location.href.replace(/^https?:\/\//, '');
+        window.location.href = `https://metamask.app.link/dapp/${dappUrl}`;
+        return;
+      }
       setError('MetaMask is not installed. Please install MetaMask to continue.');
       return;
     }

@@ -4,11 +4,27 @@ import { useWeb3 } from '../context/Web3Context';
 import { useResponsive } from '../hooks/useResponsive';
 import { useAura, AURA_TIERS, type AuraFactor, type AuraMetrics } from '../hooks/useAura';
 import { formatEther } from 'ethers';
+import {
+  IconShield, IconClock, IconChart, IconTarget, IconLock, IconDiamond,
+  IconStar, IconHeart, IconTrendUp, IconCircle, IconTriangle, IconZapOff,
+  IconFlag, IconLightbulb, IconAura,
+} from '../components/Icons';
 
 /* ═══════════════════════════════════════════════════════════
    AURA — On-Chain Credit Score
    Every wallet has an Aura. Build it wisely.
    ═══════════════════════════════════════════════════════════ */
+
+// Maps icon string IDs from useAura to actual SVG components
+const FACTOR_ICON_MAP: Record<string, React.FC<{ size?: number; color?: string }>> = {
+  shield: IconShield, clock: IconClock, chart: IconChart,
+  target: IconTarget, lock: IconLock, diamond: IconDiamond,
+};
+
+const TIER_ICON_MAP: Record<string, React.FC<{ size?: number; color?: string }>> = {
+  star: IconStar, heart: IconHeart, trendup: IconTrendUp,
+  circle: IconCircle, triangle: IconTriangle, zapoff: IconZapOff,
+};
 
 export default function Aura() {
   const { theme } = useTheme();
@@ -46,7 +62,7 @@ export default function Aura() {
   if (!address) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: 24, padding: 32 }}>
-        <div style={{ fontSize: 64 }}>✨</div>
+        <IconAura size={64} color={tier.color} />
         <h2 style={{ color: theme.text, fontSize: 28, fontWeight: 700, margin: 0 }}>Discover Your Aura</h2>
         <p style={{ color: theme.text2, fontSize: 16, maxWidth: 440, textAlign: 'center', lineHeight: 1.6 }}>
           Connect your wallet to reveal your on-chain credit score — computed from every loan you've ever taken on NexaPay.
@@ -70,7 +86,7 @@ export default function Aura() {
       {/* ── Header ─────────────────────────────────── */}
       <div style={{ textAlign: 'center', marginBottom: 40 }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-          <span style={{ fontSize: 32 }}>✨</span>
+          <IconAura size={32} color={theme.brand} />
           <h1 style={{ margin: 0, fontSize: isMobile ? 32 : 42, fontWeight: 800, color: theme.text, letterSpacing: '-0.02em' }}>
             Aura Score
           </h1>
@@ -166,7 +182,7 @@ export default function Aura() {
           border: `1.5px solid ${tier.color}40`,
           borderRadius: 100, padding: '10px 24px', marginTop: 8,
         }}>
-          <span style={{ fontSize: 22 }}>{tier.emoji}</span>
+          {(() => { const TierIcon = TIER_ICON_MAP[tier.iconId]; return TierIcon ? <TierIcon size={22} color={tier.color} /> : null; })()}
           <span style={{ fontWeight: 700, fontSize: 17, color: tier.color }}>{tier.label}</span>
         </div>
         <p style={{ color: theme.text2, fontSize: 14, maxWidth: 440, textAlign: 'center', marginTop: 12, lineHeight: 1.5 }}>
@@ -202,7 +218,7 @@ export default function Aura() {
                 border: isActive ? `1.5px solid ${t.color}30` : '1.5px solid transparent',
                 transition: 'all 0.3s',
               }}>
-                <span style={{ fontSize: 18, width: 28, textAlign: 'center' }}>{t.emoji}</span>
+                <span style={{ width: 28, display: 'flex', justifyContent: 'center' }}>{(() => { const TIcon = TIER_ICON_MAP[t.iconId]; return TIcon ? <TIcon size={18} color={t.color} /> : null; })()}</span>
                 <span style={{ fontWeight: isActive ? 700 : 500, color: isActive ? t.color : theme.text2, fontSize: 14, flex: 1 }}>
                   {t.label}
                 </span>
@@ -243,7 +259,7 @@ export default function Aura() {
           marginTop: 20, padding: '12px 16px', borderRadius: 12,
           background: theme.surfaceAlt, display: 'flex', alignItems: 'center', gap: 10,
         }}>
-          <span style={{ fontSize: 18 }}>🏁</span>
+          <IconFlag size={18} color={theme.text2} />
           <div>
             <div style={{ fontWeight: 600, fontSize: 13, color: theme.text }}>Base Score: 500</div>
             <div style={{ fontSize: 12, color: theme.text3 }}>Every wallet starts here. Your behavior moves it up or down.</div>
@@ -359,7 +375,7 @@ function FactorCard({ factor: f, theme, isMobile }: { factor: AuraFactor; theme:
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 18 }}>{f.icon}</span>
+          {(() => { const FIcon = FACTOR_ICON_MAP[f.icon]; return FIcon ? <FIcon size={18} color={theme.text2} /> : null; })()}
           <span style={{ fontWeight: 600, fontSize: 14, color: theme.text }}>{f.name}</span>
           <span style={{
             fontSize: 11, color: theme.text3, fontWeight: 500,
@@ -494,7 +510,7 @@ function ImprovementTips({ score, metrics: m, theme, isMobile }: {
       boxShadow: theme.cardShadow,
     }}>
       <h3 style={{ color: theme.text, fontSize: 16, fontWeight: 700, marginTop: 0, marginBottom: 16 }}>
-        💡 How to Improve Your Aura
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}><IconLightbulb size={18} color={theme.warn} /> How to Improve Your Aura</span>
       </h3>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {tips.map((t, i) => (

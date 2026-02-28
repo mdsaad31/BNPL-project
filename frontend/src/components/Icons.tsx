@@ -402,3 +402,104 @@ export function IconLink({ size, color, style, className }: P) {
     </svg>
   );
 }
+
+// ── Star (filled) ───────────────────────────────────────
+export function IconStar({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill={c} stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+    </svg>
+  );
+}
+
+// ── Heart / Strong ──────────────────────────────────────
+export function IconHeart({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill={c} stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+  );
+}
+
+// ── Trending Up / Rising ────────────────────────────────
+export function IconTrendUp({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+      <polyline points="17 6 23 6 23 12"/>
+    </svg>
+  );
+}
+
+// ── Circle (filled) / Neutral ───────────────────────────
+export function IconCircle({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill={c} stroke={c} strokeWidth="1.5">
+      <circle cx="12" cy="12" r="9"/>
+    </svg>
+  );
+}
+
+// ── Triangle Warning / Weak ─────────────────────────────
+export function IconTriangle({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+      <line x1="12" y1="9" x2="12" y2="13"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+  );
+}
+
+// ── Zap Off / Broken ────────────────────────────────────
+export function IconZapOff({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="12.41 6.75 13 2 10.57 4.92"/>
+      <polyline points="18.57 12.91 21 10 15.66 10"/>
+      <polyline points="8 8 3 14 12 14 11 22 16 16"/>
+      <line x1="1" y1="1" x2="23" y2="23"/>
+    </svg>
+  );
+}
+
+// ── Target / Bullseye ───────────────────────────────────
+export function IconTarget({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <circle cx="12" cy="12" r="6"/>
+      <circle cx="12" cy="12" r="2"/>
+    </svg>
+  );
+}
+
+// ── Flag ────────────────────────────────────────────────
+export function IconFlag({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+      <line x1="4" y1="22" x2="4" y2="15"/>
+    </svg>
+  );
+}
+
+// ── Lightbulb ───────────────────────────────────────────
+export function IconLightbulb({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18h6"/>
+      <path d="M10 22h4"/>
+      <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/>
+    </svg>
+  );
+}

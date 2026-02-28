@@ -20,7 +20,7 @@ export type AuraTier = (typeof AuraTier)[keyof typeof AuraTier];
 export interface AuraTierInfo {
   tier: AuraTier;
   label: string;
-  emoji: string;
+  iconId: string;
   color: string;
   gradientFrom: string;
   gradientTo: string;
@@ -29,12 +29,12 @@ export interface AuraTierInfo {
 }
 
 export const AURA_TIERS: AuraTierInfo[] = [
-  { tier: AuraTier.LEGENDARY, label: 'Legendary Aura', emoji: '⭐', color: '#F59E0B', gradientFrom: '#F59E0B', gradientTo: '#D97706', minScore: 850, description: 'You are the gold standard of DeFi trustworthiness.' },
-  { tier: AuraTier.STRONG,    label: 'Strong Aura',    emoji: '💜', color: '#8B5CF6', gradientFrom: '#8B5CF6', gradientTo: '#7C3AED', minScore: 700, description: 'Reliable borrower with an excellent track record.' },
-  { tier: AuraTier.RISING,    label: 'Rising Aura',    emoji: '🔵', color: '#3B82F6', gradientFrom: '#3B82F6', gradientTo: '#2563EB', minScore: 550, description: 'Building a solid reputation on-chain.' },
-  { tier: AuraTier.NEUTRAL,   label: 'Neutral Aura',   emoji: '⚪', color: '#6B7280', gradientFrom: '#6B7280', gradientTo: '#4B5563', minScore: 400, description: 'Average history. Room to grow.' },
-  { tier: AuraTier.WEAK,      label: 'Weak Aura',      emoji: '🟠', color: '#F97316', gradientFrom: '#F97316', gradientTo: '#EA580C', minScore: 200, description: 'Concerning patterns detected. Improve your repayments.' },
-  { tier: AuraTier.BROKEN,    label: 'Broken Aura',    emoji: '🔴', color: '#EF4444', gradientFrom: '#EF4444', gradientTo: '#DC2626', minScore: 0,   description: 'Major trust issues. Defaults are killing your score.' },
+  { tier: AuraTier.LEGENDARY, label: 'Legendary Aura', iconId: 'star',     color: '#F59E0B', gradientFrom: '#F59E0B', gradientTo: '#D97706', minScore: 850, description: 'You are the gold standard of DeFi trustworthiness.' },
+  { tier: AuraTier.STRONG,    label: 'Strong Aura',    iconId: 'heart',    color: '#8B5CF6', gradientFrom: '#8B5CF6', gradientTo: '#7C3AED', minScore: 700, description: 'Reliable borrower with an excellent track record.' },
+  { tier: AuraTier.RISING,    label: 'Rising Aura',    iconId: 'trendup',  color: '#3B82F6', gradientFrom: '#3B82F6', gradientTo: '#2563EB', minScore: 550, description: 'Building a solid reputation on-chain.' },
+  { tier: AuraTier.NEUTRAL,   label: 'Neutral Aura',   iconId: 'circle',   color: '#6B7280', gradientFrom: '#6B7280', gradientTo: '#4B5563', minScore: 400, description: 'Average history. Room to grow.' },
+  { tier: AuraTier.WEAK,      label: 'Weak Aura',      iconId: 'triangle', color: '#F97316', gradientFrom: '#F97316', gradientTo: '#EA580C', minScore: 200, description: 'Concerning patterns detected. Improve your repayments.' },
+  { tier: AuraTier.BROKEN,    label: 'Broken Aura',    iconId: 'zapoff',   color: '#EF4444', gradientFrom: '#EF4444', gradientTo: '#DC2626', minScore: 0,   description: 'Major trust issues. Defaults are killing your score.' },
 ];
 
 export function getTierForScore(score: number): AuraTierInfo {
@@ -149,7 +149,7 @@ function computeAuraScore(m: AuraMetrics): { score: number; factors: AuraFactor[
     name: 'Repayment Reliability',
     description: `${totalRepaid}/${totalClosed} loans repaid, ${totalDefaulted} defaults`,
     score: f1, maxScore: 200, minScore: -300, weight: '40%',
-    icon: '🛡️',
+    icon: 'shield',
   });
 
   // ── Factor 2: Payment Discipline ─────────────────────
@@ -169,7 +169,7 @@ function computeAuraScore(m: AuraMetrics): { score: number; factors: AuraFactor[
     name: 'Payment Discipline',
     description: `${m.totalInstallmentsPaid}/${m.maxPossibleInstallments} installments paid, ${m.lateBNPLLoans + m.lateNFTLoans} overdue`,
     score: f2, maxScore: 150, minScore: -100, weight: '25%',
-    icon: '⏰',
+    icon: 'clock',
   });
 
   // ── Factor 3: Borrowing Experience ───────────────────
@@ -191,7 +191,7 @@ function computeAuraScore(m: AuraMetrics): { score: number; factors: AuraFactor[
     name: 'Borrowing Experience',
     description: `${totalLoans} total loans taken`,
     score: f3, maxScore: 100, minScore: 0, weight: '15%',
-    icon: '📊',
+    icon: 'chart',
   });
 
   // ── Factor 4: Portfolio Diversity ────────────────────
@@ -204,7 +204,7 @@ function computeAuraScore(m: AuraMetrics): { score: number; factors: AuraFactor[
     name: 'Portfolio Diversity',
     description: hasBNPL && hasNFT ? 'Both BNPL & NFT loans used' : hasBNPL ? 'BNPL only' : hasNFT ? 'NFT only' : 'No loans',
     score: f4, maxScore: 50, minScore: 0, weight: '8%',
-    icon: '🎯',
+    icon: 'target',
   });
 
   // ── Factor 5: Collateral Behavior ───────────────────
@@ -220,7 +220,7 @@ function computeAuraScore(m: AuraMetrics): { score: number; factors: AuraFactor[
     name: 'Collateral Behavior',
     description: `${m.collateralClaimed} claimed, ${m.collateralLocked} still locked`,
     score: f5, maxScore: 50, minScore: -50, weight: '6%',
-    icon: '🔒',
+    icon: 'lock',
   });
 
   // ── Factor 6: NFT Lending Track Record ──────────────
@@ -238,7 +238,7 @@ function computeAuraScore(m: AuraMetrics): { score: number; factors: AuraFactor[
     name: 'NFT Lending Track Record',
     description: m.totalNFTLoans > 0 ? `${m.repaidNFTLoans}/${m.totalNFTLoans} NFT loans repaid` : 'No NFT lending history',
     score: f6, maxScore: 50, minScore: -50, weight: '6%',
-    icon: '💎',
+    icon: 'diamond',
   });
 
   // ── Final Score ─────────────────────────────────────
