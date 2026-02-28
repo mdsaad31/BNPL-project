@@ -8,6 +8,7 @@ import Shop from './pages/Shop';
 import Dashboard from './pages/Dashboard';
 import Merchant from './pages/Merchant';
 import NFTLoans from './pages/NFTLoans';
+import Aura from './pages/Aura';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/merchant" element={<Merchant />} />
                 <Route path="/nft-loans" element={<NFTLoans />} />
+                <Route path="/aura" element={<Aura />} />
               </Route>
             </Routes>
           </BrowserRouter>

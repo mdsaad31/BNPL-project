@@ -381,6 +381,17 @@ export function IconRefresh({ size, color, style, className }: P) {
   );
 }
 
+// ── Aura / Sparkle Star ─────────────────────────────────
+export function IconAura({ size, color, style, className }: P) {
+  const { size: s, color: c } = d(size, color);
+  return (
+    <svg className={className} style={style} width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2L14.09 8.26L20 9.27L15.55 13.97L16.91 20L12 16.9L7.09 20L8.45 13.97L4 9.27L9.91 8.26L12 2Z"/>
+      <circle cx="12" cy="12" r="3" strokeWidth="1.2" opacity="0.5"/>
+    </svg>
+  );
+}
+
 // ── Link / Chain ────────────────────────────────────────
 export function IconLink({ size, color, style, className }: P) {
   const { size: s, color: c } = d(size, color);

@@ -44,20 +44,31 @@ async function main() {
   console.log(`✅ MockNFT deployed to:           ${mockNFTAddr}`);
 
   // ─── Post-deploy Setup ───────────────────────────────
-  // Approve MockNFT collection with 0.05 BNB floor price (testnet-friendly)
-  const approveTx = await nftLoan.approveCollection(mockNFTAddr, hre.ethers.parseEther("0.05"));
-  await approveTx.wait();
-  console.log(`🖼️  MockNFT approved as collateral (floor: 0.05 BNB)`);
+  // ─── Optional Treasury Funding ────────────────────────
+  // Skip if deployer is low on funds (preserve testnet BNB)
+  const postBalance = await hre.ethers.provider.getBalance(deployer.address);
+  const MIN_SAFE_BALANCE = hre.ethers.parseEther("0.3"); // keep at least 0.3 BNB
 
-  // Fund NFT loan treasury with 0.1 BNB (testnet-friendly)
-  const nftTreasuryTx = await nftLoan.depositToTreasury({ value: hre.ethers.parseEther("0.1") });
-  await nftTreasuryTx.wait();
-  console.log(`💰 NFT Loan treasury funded with 0.1 BNB`);
+  if (postBalance > MIN_SAFE_BALANCE) {
+    const approveTx = await nftLoan.approveCollection(mockNFTAddr, hre.ethers.parseEther("0.05"));
+    await approveTx.wait();
+    console.log(`🖼️  MockNFT approved as collateral (floor: 0.05 BNB)`);
 
-  // Fund BNPL treasury with 0.1 BNB (merchant instant payouts)
-  const bnplTreasuryTx = await deployer.sendTransaction({ to: bnplAddr, value: hre.ethers.parseEther("0.1") });
-  await bnplTreasuryTx.wait();
-  console.log(`💰 BNPL treasury funded with 0.1 BNB`);
+    const nftTreasuryTx = await nftLoan.depositToTreasury({ value: hre.ethers.parseEther("0.1") });
+    await nftTreasuryTx.wait();
+    console.log(`💰 NFT Loan treasury funded with 0.1 BNB`);
+
+    const bnplTreasuryTx = await deployer.sendTransaction({ to: bnplAddr, value: hre.ethers.parseEther("0.1") });
+    await bnplTreasuryTx.wait();
+    console.log(`💰 BNPL treasury funded with 0.1 BNB`);
+  } else {
+    // Still approve NFT collection (gas only, no value transfer)
+    const approveTx = await nftLoan.approveCollection(mockNFTAddr, hre.ethers.parseEther("0.05"));
+    await approveTx.wait();
+    console.log(`🖼️  MockNFT approved as collateral (floor: 0.05 BNB)`);
+    console.log(`⚠️  Skipped treasury funding — balance too low (${hre.ethers.formatEther(postBalance)} BNB)`);
+    console.log(`   Fund manually: send BNB to BNPLLoan (${bnplAddr}) and call depositToTreasury on NFTCollateralLoan`);
+  }
 
   console.log("\n─────────────────────────────────────────────");
   console.log("📋 Deployment Summary");

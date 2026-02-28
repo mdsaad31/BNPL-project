@@ -11,6 +11,7 @@ const LINKS = [
   { to: '/dashboard', label: 'Dashboard' },
   { to: '/nft-loans', label: 'NFT Loans' },
   { to: '/merchant', label: 'Merchant' },
+  { to: '/aura', label: 'Aura ✨' },
 ];
 
 export default function Navbar() {
