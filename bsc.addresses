@@ -1,0 +1,49 @@
+╔══════════════════════════════════════════════════════════════╗
+║               NexaPay — BSC Testnet Addresses                ║
+║                     Chain ID: 97                             ║
+╚══════════════════════════════════════════════════════════════╝
+
+Network:          BNB Smart Chain Testnet
+Chain ID:         97
+RPC:              https://data-seed-prebsc-1-s1.binance.org:8545
+Explorer:         https://testnet.bscscan.com
+Deployed:         2026-02-27T23:22:01.755Z
+
+────────────────────────────────────────────────────────────────
+
+CollateralVault
+  Address:    0x76Bd629f22ee03762490559BF528033206AD878c
+  BSCScan:    https://testnet.bscscan.com/address/0x76Bd629f22ee03762490559BF528033206AD878c
+  Purpose:    Manages BNB collateral locks at 150% ratio.
+              Handles lock, release, and liquidation.
+
+────────────────────────────────────────────────────────────────
+
+BNPLLoan
+  Address:    0xF0f5B50fc5f892E3cEd6C16A228a4104FA9bcAf0
+  BSCScan:    https://testnet.bscscan.com/address/0xF0f5B50fc5f892E3cEd6C16A228a4104FA9bcAf0
+  Purpose:    Core BNPL contract. Manages loans, products,
+              merchants, and 4-installment repayment schedule.
+              Pays merchants instantly upon purchase.
+
+────────────────────────────────────────────────────────────────
+
+NFTCollateralLoan
+  Address:    0x34fc01159cad4f5BA5f0CdE23E41D21011581C5b
+  BSCScan:    https://testnet.bscscan.com/address/0x34fc01159cad4f5BA5f0CdE23E41D21011581C5b
+  Purpose:    NFT-backed lending. Lock ERC-721 as collateral,
+              borrow BNB at 50% LTV, 5% interest, 30-day term.
+
+────────────────────────────────────────────────────────────────
+
+MockNFT (NPNFT)
+  Address:    0x3808Ecd5Dfb2E74C96B75D7E1994e783e5c359E2
+  BSCScan:    https://testnet.bscscan.com/address/0x3808Ecd5Dfb2E74C96B75D7E1994e783e5c359E2
+  Purpose:    Demo ERC-721 token for testing NFT loans.
+              Anyone can mint for free via mint().
+
+════════════════════════════════════════════════════════════════
+
+Owner / Deployer
+  Address:    0x9c713a7AF5B1c3Fc58F93bCc4660612af0C50Dc1
+  BSCScan:    https://testnet.bscscan.com/address/0x9c713a7AF5B1c3Fc58F93bCc4660612af0C50Dc1
