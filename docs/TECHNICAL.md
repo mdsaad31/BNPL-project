@@ -159,6 +159,60 @@ Tier Mapping:
 
 ---
 
+## ✦ Business Model Integration
+
+The smart contracts implement NexaPay's multi-stream revenue model directly on-chain:
+
+| Revenue Stream | Contract | Implementation |
+|:---|:---|:---|
+| **BNPL Protocol Fee** | `BNPLLoan.sol` | Fee deducted during `purchaseProduct()` — accumulates in contract treasury |
+| **NFT Lending Interest** | `NFTCollateralLoan.sol` | 5% interest collected in `repayLoan()` — flows to NFT treasury |
+| **Liquidation Surplus** | `BNPLLoan.sol` + `CollateralVault.sol` | On `triggerDefault()`, outstanding debt goes to treasury; remainder refunded to buyer |
+| **Treasury Management** | Both loan contracts | `treasuryBalance()` tracks funds; `withdrawTreasury()` for protocol operations |
+| **Aura-Tiered Pricing** | Frontend (`useAura.ts`) | High Aura scores (700+) unlock reduced collateral ratios in future upgrade |
+
+### Treasury Flow Diagram
+
+```mermaid
+graph TD
+    A[Buyer Pays Installment] -->|BNB| B[BNPLLoan Treasury]
+    C[NFT Borrower Repays + 5%] -->|BNB + Interest| D[NFTCollateralLoan Treasury]
+    E[Collateral Liquidated] -->|Surplus BNB| B
+    F[NFT Liquidated] -->|NFT Value| D
+    B --> G[Protocol Operations]
+    D --> G
+    G --> H[Treasury Yield Strategies]
+    H -->|Returns| B
+    H -->|Returns| D
+    G --> I[Merchant API Infrastructure]
+    G --> J[Cross-Chain Bridge Funding]
+```
+
+---
+
+## ✦ Open-Source Stack
+
+Every dependency in NexaPay is open-source:
+
+| Layer | Package | Version | License |
+|:---|:---|:---|:---|
+| Contracts | Hardhat | 2.28.6 | MIT |
+| Contracts | OpenZeppelin Contracts | 5.4.0 | MIT |
+| Contracts | Hardhat Toolbox | 5.0.0 | MIT |
+| Contracts | dotenv | 17.3.1 | BSD-2 |
+| Frontend | React | 19.2.0 | MIT |
+| Frontend | React Router DOM | 6.30.3 | MIT |
+| Frontend | ethers.js | 6.16.0 | MIT |
+| Frontend | Convex | 1.32.0 | Apache-2.0 |
+| Frontend | Vite | 7.3.1 | MIT |
+| Frontend | TypeScript | 5.9.3 | Apache-2.0 |
+| Frontend | ESLint | 9.39.1 | MIT |
+| Infra | Docker | — | Apache-2.0 |
+| Infra | Nginx | — | BSD-2 |
+| Chain | BNB Smart Chain | — | Open-source |
+
+---
+
 ## ✦ Setup Guide
 
 ### Prerequisites

@@ -91,7 +91,28 @@ NexaPay is a **non-custodial Buy Now Pay Later protocol** that uses over-collate
 
 Unlike every traditional BNPL service, **merchants are paid the full product price at the moment of purchase**. No waiting. No settlement batches. The buyer's collateral guarantees the protocol can afford this.
 
-### 2. Aura — On-Chain Credit Scoring
+### 2. Multi-Stream Revenue Model
+
+NexaPay captures value at **every stage** of the lending lifecycle:
+
+| Revenue Stream | Mechanism |
+|:---|:---|
+| **BNPL Protocol Fee (1–2%)** | Service fee on each installment purchase |
+| **NFT Lending Interest (5%)** | Flat interest on NFT-backed BNB loans |
+| **Liquidation Surplus** | Excess collateral retained by treasury on defaults |
+| **Treasury Yield** | Idle treasury deployed to BNB Chain yield strategies (Venus, Alpaca) |
+| **Aura-Tiered Pricing** | High-score wallets unlock reduced collateral (down to 120%) — drives repeat usage |
+| **Merchant API** | Paid API for Web3 merchants to embed NexaPay checkout |
+| **Cross-Chain Fees** | Toll on cross-chain BNPL via LayerZero/Wormhole (future) |
+
+**Unit Economics:**
+- Per 1 BNB BNPL purchase: ~0.015 BNB protocol fee + collateral-backed guarantee
+- Per 1 BNB NFT loan: 0.05 BNB interest income
+- Default scenarios: surplus collateral captured (up to 0.5 BNB net per loan)
+
+This model is **protocol-native** — no governance token needed. Revenue comes from real usage, not token inflation.
+
+### 3. Aura — On-Chain Credit Scoring
 
 NexaPay computes a **0–1000 reputation score** from 6 weighted factors derived entirely from on-chain activity:
 
@@ -106,7 +127,7 @@ NexaPay computes a **0–1000 reputation score** from 6 weighted factors derived
 
 This creates a **portable, composable credit identity** that any dApp can read. No oracle needed — it's computed client-side from public chain data.
 
-### 3. Dual Collateral Model
+### 4. Dual Collateral Model
 
 - **BNB Collateral** (150% ratio) for BNPL purchases
 - **NFT Collateral** (50% LTV) for BNB loans
@@ -135,6 +156,21 @@ Two pathways for users to access credit based on what they already hold.
 | **Merchant Adoption** | Instant settlement + zero chargebacks = compelling value prop for Web3 merchants |
 | **DeFi Composability** | Aura scores can integrate with other protocols for dynamic interest rates, whitelists, airdrop eligibility |
 | **BNB Ecosystem** | Brings a missing DeFi primitive to BNB Chain, increasing TVL and user engagement |
+| **Protocol Revenue** | Multi-stream model (fees, interest, liquidation, yield) generates sustainable revenue without token inflation |
+
+### Business Model Impact
+
+The enhanced revenue model creates a **self-sustaining growth flywheel**:
+
+```
+More Buyers → More Protocol Fees → Larger Treasury
+    ↓                                    ↓
+More Merchants → More Products     More NFT Lending Capacity
+    ↓                                    ↓
+Higher Aura Scores → Better Terms → Repeat Usage
+```
+
+> Unlike token-dependent DeFi protocols, NexaPay generates revenue from **real service delivery**: protocol fees (1–2%), lending interest (5%), treasury yield, and liquidation surplus. This ensures long-term sustainability independent of market conditions.
 
 ### Social Impact
 
@@ -153,6 +189,7 @@ Two pathways for users to access credit based on what they already hold.
 | DeFi has no installment payments | 4-installment weekly repayment schedule |
 | Chargebacks cost merchants billions | Collateral eliminates fraud risk entirely |
 | BNPL protocols don't exist on BNB | NexaPay fills the gap |
+| DeFi protocols rely on token incentives | Multi-stream revenue model (fees, interest, yield) — no token needed |
 
 ---
 

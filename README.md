@@ -165,18 +165,52 @@ Every wallet builds a **reputation score (0–1000)** from 6 weighted factors:
 
 ---
 
-## ✦ Business / Token Model
+## ✦ Business Model
 
-NexaPay is a **protocol-level primitive** — not a token project.
+NexaPay captures value at **every stage of the lending lifecycle** without relying on a governance token.
 
-| Revenue Stream | Mechanism |
-|:---|:---|
-| **Protocol Treasury** | Installment payments accumulate in the BNPLLoan contract |
-| **NFT Lending Interest** | 5% interest on NFT-backed loans flows to the protocol |
-| **Liquidation Proceeds** | Defaulted collateral replenishes the treasury |
-| **Future: Fee Tiers** | Aura-based fee discounts for high-reputation borrowers |
+### Revenue Streams
 
-> No governance token at this stage. The focus is on **protocol utility, not speculation**.
+| Stream | Mechanism | When |
+|:---|:---|:---|
+| **BNPL Protocol Fee** | 1–2% service fee on each installment purchase | Every purchase |
+| **NFT Lending Interest** | 5% flat interest on NFT-backed BNB loans | Every NFT loan |
+| **Liquidation Surplus** | Collateral exceeding outstanding debt is retained by the treasury on defaults | On default events |
+| **Treasury Yield** | Protocol treasury funds deployed to BNB Chain yield strategies (Venus, Alpaca) during idle periods | Continuous |
+| **Aura-Tiered Pricing** | High Aura wallets (700+) unlock reduced collateral ratios (down to 120%), driving repeat usage | Repeat borrowers |
+| **Merchant Integration API** | Paid API access for Web3 merchants and dApps to embed NexaPay checkout | B2B partnerships |
+| **Cross-Chain Bridge Fees** | Toll on cross-chain BNPL transactions via LayerZero/Wormhole (Phase 3) | Future expansion |
+
+### Unit Economics
+
+```
+Per 1 BNB BNPL Purchase:
+  Protocol fee (1.5%)          = 0.015 BNB
+  Treasury holds 1.5 BNB collateral during loan term
+  If default → surplus captured (up to 0.5 BNB after debt coverage)
+
+Per 1 BNB NFT Loan:
+  Interest income (5%)         = 0.05 BNB
+  If default → NFT liquidation value captured
+```
+
+### Growth Flywheel
+
+```mermaid
+graph LR
+    A[Low-Fee BNPL] --> B[More Buyers]
+    B --> C[More Merchants]
+    C --> D[More Products]
+    D --> A
+    B --> E[Higher Aura Scores]
+    E --> F[Better Loan Terms]
+    F --> B
+    C --> G[Treasury Growth]
+    G --> H[More NFT Lending Capacity]
+    H --> B
+```
+
+> No governance token at this stage. Revenue is **protocol-native** — earned through service fees, interest, and treasury management, not token inflation.
 
 ---
 
@@ -321,6 +355,43 @@ npx hardhat test
 | **Deployment** | Netlify (frontend) · BSC Testnet (contracts) |
 | **DevOps** | Docker Compose (Hardhat node + Nginx) |
 | **Testing** | Hardhat + Chai + hardhat-network-helpers |
+
+---
+
+## ✦ Open-Source Dependencies
+
+NexaPay is built entirely on open-source software.
+
+### Smart Contracts
+
+| Package | Version | License | Purpose |
+|:---|:---|:---|:---|
+| [Hardhat](https://hardhat.org/) | 2.28.6 | MIT | Ethereum development environment — compile, test, deploy |
+| [OpenZeppelin Contracts](https://www.openzeppelin.com/contracts) | 5.4.0 | MIT | Battle-tested ERC-721, ReentrancyGuard, Ownable |
+| [Hardhat Toolbox](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-toolbox) | 5.0.0 | MIT | Ethers, Chai, coverage, gas reporter, verification |
+| [dotenv](https://github.com/motdotla/dotenv) | 17.3.1 | BSD-2 | Environment variable management |
+
+### Frontend
+
+| Package | Version | License | Purpose |
+|:---|:---|:---|:---|
+| [React](https://react.dev/) | 19.2.0 | MIT | UI component library |
+| [React DOM](https://react.dev/) | 19.2.0 | MIT | DOM rendering for React |
+| [React Router DOM](https://reactrouter.com/) | 6.30.3 | MIT | Client-side routing (SPA) |
+| [ethers.js](https://docs.ethers.org/) | 6.16.0 | MIT | Ethereum wallet & contract interactions |
+| [Convex](https://www.convex.dev/) | 1.32.0 | Apache-2.0 | Real-time backend data sync |
+| [Vite](https://vite.dev/) | 7.3.1 | MIT | Lightning-fast build tool & dev server |
+| [TypeScript](https://www.typescriptlang.org/) | 5.9.3 | Apache-2.0 | Static type checking |
+| [ESLint](https://eslint.org/) | 9.39.1 | MIT | Code quality & linting |
+
+### Infrastructure
+
+| Tool | Purpose |
+|:---|:---|
+| [Docker](https://www.docker.com/) | Containerized reproducible builds |
+| [Nginx](https://nginx.org/) | Static file serving in production container |
+| [Netlify](https://www.netlify.com/) | Continuous deployment from GitHub |
+| [BNB Chain (BSC)](https://www.bnbchain.org/) | Layer-1 EVM blockchain for contract deployment |
 
 ---
 
