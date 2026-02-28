@@ -3,7 +3,7 @@ import { useWeb3 } from '../context/Web3Context';
 import { useTheme } from '../context/ThemeContext';
 import { useResponsive } from '../hooks/useResponsive';
 import { useState } from 'react';
-import { IconSun, IconMoon, IconMenu, IconX, IconLogout } from './Icons';
+import { IconSun, IconMoon, IconMenu, IconX, IconLogout, IconNexaLogo } from './Icons';
 
 const LINKS = [
   { to: '/', label: 'Home' },
@@ -51,20 +51,7 @@ export default function Navbar() {
       >
         {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12, textDecoration: 'none' }}>
-          <div
-            style={{
-              width: isMobile ? 34 : 40,
-              height: isMobile ? 34 : 40,
-              borderRadius: 14,
-              background: 'linear-gradient(135deg, #F97316, #EA580C)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(249,115,22,0.25)',
-            }}
-          >
-            <span style={{ color: 'white', fontWeight: 800, fontSize: isMobile ? 15 : 18 }}>T</span>
-          </div>
+          <IconNexaLogo size={isMobile ? 36 : 42} />
           <div>
             <div style={{ fontWeight: 700, fontSize: isMobile ? 15 : 17, color: theme.text, letterSpacing: '-0.02em' }}>NexaPay</div>
             {!isMobile && <div style={{ fontSize: 11, color: theme.text3, marginTop: -2 }}>BNPL Protocol</div>}

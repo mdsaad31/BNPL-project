@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useWeb3 } from '../context/Web3Context';
 import { useTheme } from '../context/ThemeContext';
 import { useResponsive } from '../hooks/useResponsive';
-import { IconLock, IconBolt, IconShield, IconEye, IconCalendar, IconGift, IconDot, IconArrowRight } from '../components/Icons';
+import { IconLock, IconBolt, IconShield, IconEye, IconCalendar, IconGift, IconDot, IconArrowRight, IconNexaLogo } from '../components/Icons';
 
 /* ═══════════════════════════════════════════════════════════
    LANDING PAGE — Dark mode + Responsive + SVG icons
@@ -49,6 +49,11 @@ export default function Landing() {
           }}>
             <IconDot size={8} color={theme.ok} />
             Live on BNB Chain
+          </div>
+
+          {/* Logo */}
+          <div style={{ marginBottom: isMobile ? 16 : 24, display: 'flex', justifyContent: 'center' }}>
+            <IconNexaLogo size={isMobile ? 64 : 88} />
           </div>
 
           {/* Headline */}

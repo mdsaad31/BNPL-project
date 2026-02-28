@@ -3,6 +3,7 @@
    Clean, crisp, professional look
    ═══════════════════════════════════════════════════════════ */
 
+import { useId } from 'react';
 import type { CSSProperties } from 'react';
 
 interface P {
@@ -500,6 +501,137 @@ export function IconLightbulb({ size, color, style, className }: P) {
       <path d="M9 18h6"/>
       <path d="M10 22h4"/>
       <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/>
+    </svg>
+  );
+}
+
+// ── NexaPay 3D Logo (BNB-style diamond) ─────────────────
+export function IconNexaLogo({ size = 40, style, className }: Omit<P, 'color'>) {
+  const uid = useId().replace(/:/g, '');
+  const g = (n: string) => `nl${uid}${n}`;
+
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none" style={style} className={className}>
+      <defs>
+        {/* Main face gradient — BNB gold blending into NexaPay orange */}
+        <linearGradient id={g('m')} x1="15" y1="15" x2="85" y2="85" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#F0B90B"/>
+          <stop offset="40%" stopColor="#F9A825"/>
+          <stop offset="70%" stopColor="#F97316"/>
+          <stop offset="100%" stopColor="#EA580C"/>
+        </linearGradient>
+        {/* Top bevel — bright highlight */}
+        <linearGradient id={g('hi')} x1="50" y1="6" x2="50" y2="50" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFE082"/>
+          <stop offset="100%" stopColor="#FFB74D"/>
+        </linearGradient>
+        {/* Bottom bevel — deep shadow */}
+        <linearGradient id={g('lo')} x1="50" y1="50" x2="50" y2="96" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#BF360C"/>
+          <stop offset="100%" stopColor="#6D2008"/>
+        </linearGradient>
+        {/* Shine overlay — glass reflection */}
+        <linearGradient id={g('sh')} x1="25" y1="10" x2="70" y2="55" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="white" stopOpacity={0.45}/>
+          <stop offset="100%" stopColor="white" stopOpacity={0}/>
+        </linearGradient>
+        {/* Inner ring glow */}
+        <radialGradient id={g('rg')} cx="50" cy="50" r="28" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="white" stopOpacity={0.08}/>
+          <stop offset="100%" stopColor="white" stopOpacity={0}/>
+        </radialGradient>
+        {/* Nexus core glow */}
+        <radialGradient id={g('cg')} cx="50" cy="50" r="8" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFF8E1" stopOpacity={1}/>
+          <stop offset="40%" stopColor="#FFD54F" stopOpacity={0.9}/>
+          <stop offset="100%" stopColor="#F0B90B" stopOpacity={0}/>
+        </radialGradient>
+        {/* Network line gradient */}
+        <linearGradient id={g('nl')} x1="50" y1="35" x2="50" y2="65" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FFF8E1" stopOpacity={0.7}/>
+          <stop offset="50%" stopColor="#FFD54F" stopOpacity={0.45}/>
+          <stop offset="100%" stopColor="white" stopOpacity={0.15}/>
+        </linearGradient>
+        {/* Outer node glow */}
+        <filter id={g('ng2')} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        {/* Drop shadow */}
+        <filter id={g('ds')} x="-15%" y="-10%" width="130%" height="135%">
+          <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#F97316" floodOpacity={0.35}/>
+        </filter>
+      </defs>
+
+      <g filter={`url(#${g('ds')})`}>
+        {/* ── 3D Bevel edges ── */}
+        {/* Top-right bevel (bright) */}
+        <polygon points="50,6 96,50 84,50 50,18" fill={`url(#${g('hi')})`} opacity={0.92}/>
+        {/* Top-left bevel (warm light) */}
+        <polygon points="50,6 4,50 16,50 50,18" fill="#FDBA74" opacity={0.88}/>
+        {/* Bottom-right bevel (dark) */}
+        <polygon points="96,50 50,94 50,82 84,50" fill="#9A3412" opacity={0.8}/>
+        {/* Bottom-left bevel (deepest shadow) */}
+        <polygon points="4,50 50,94 50,82 16,50" fill={`url(#${g('lo')})`} opacity={0.78}/>
+
+        {/* ── Main diamond face ── */}
+        <polygon points="50,18 84,50 50,82 16,50" fill={`url(#${g('m')})`}/>
+
+        {/* ── Shine (glass reflection on top half) ── */}
+        <polygon points="50,18 84,50 50,50 16,50" fill={`url(#${g('sh')})`}/>
+
+        {/* ── Soft inner radial glow ── */}
+        <circle cx="50" cy="50" r="28" fill={`url(#${g('rg')})`}/>
+
+        {/* ── Inner diamond ring (BNB signature) ── */}
+        <polygon points="50,30 72,50 50,70 28,50" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth={1.2}/>
+
+        {/* ── Nexus constellation ── */}
+        <g opacity={0.92}>
+          {/* Radial spokes — 6 directions */}
+          <line x1="50" y1="50" x2="50" y2="33" stroke={`url(#${g('nl')})`} strokeWidth={1.1}/>
+          <line x1="50" y1="50" x2="50" y2="67" stroke={`url(#${g('nl')})`} strokeWidth={1.1}/>
+          <line x1="50" y1="50" x2="64.7" y2="41.5" stroke={`url(#${g('nl')})`} strokeWidth={1.1}/>
+          <line x1="50" y1="50" x2="35.3" y2="58.5" stroke={`url(#${g('nl')})`} strokeWidth={1.1}/>
+          <line x1="50" y1="50" x2="64.7" y2="58.5" stroke={`url(#${g('nl')})`} strokeWidth={1.1}/>
+          <line x1="50" y1="50" x2="35.3" y2="41.5" stroke={`url(#${g('nl')})`} strokeWidth={1.1}/>
+
+          {/* Hex ring connecting outer nodes */}
+          <polygon
+            points="50,33 64.7,41.5 64.7,58.5 50,67 35.3,58.5 35.3,41.5"
+            fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth={0.7}
+          />
+
+          {/* Outer nodes — glowing dots at hex vertices */}
+          <g filter={`url(#${g('ng2')})`}>
+            <circle cx="50" cy="33" r="2.2" fill="#FFE082"/>
+            <circle cx="64.7" cy="41.5" r="2.2" fill="#FFD54F"/>
+            <circle cx="64.7" cy="58.5" r="2" fill="#FDBA74"/>
+            <circle cx="50" cy="67" r="2" fill="#FFB74D"/>
+            <circle cx="35.3" cy="58.5" r="2" fill="#FDBA74"/>
+            <circle cx="35.3" cy="41.5" r="2.2" fill="#FFD54F"/>
+          </g>
+
+          {/* Mid-spoke accent nodes */}
+          <circle cx="57.3" cy="37.8" r="1" fill="white" fillOpacity={0.45}/>
+          <circle cx="42.7" cy="62.2" r="1" fill="white" fillOpacity={0.3}/>
+          <circle cx="57.3" cy="62.2" r="1" fill="white" fillOpacity={0.3}/>
+          <circle cx="42.7" cy="37.8" r="1" fill="white" fillOpacity={0.45}/>
+          <circle cx="50" cy="41.5" r="0.8" fill="white" fillOpacity={0.35}/>
+          <circle cx="50" cy="58.5" r="0.8" fill="white" fillOpacity={0.25}/>
+
+          {/* Central glowing core */}
+          <circle cx="50" cy="50" r="8" fill={`url(#${g('cg')})`}/>
+          <circle cx="50" cy="50" r="3.5" fill="#FFF8E1" fillOpacity={0.95}/>
+          <circle cx="50" cy="50" r="1.8" fill="white"/>
+        </g>
+
+        {/* ── Corner satellite diamonds (BNB homage) ── */}
+        <polygon points="50,1 53.5,6 50,11 46.5,6" fill="#FCD34D" opacity={0.9}/>
+        <polygon points="50,89 53.5,94 50,99 46.5,94" fill="#7C2D12" opacity={0.55}/>
+        <polygon points="1,50 6,46.5 11,50 6,53.5" fill="#FDBA74" opacity={0.75}/>
+        <polygon points="89,50 94,46.5 99,50 94,53.5" fill="#9A3412" opacity={0.5}/>
+      </g>
     </svg>
   );
 }

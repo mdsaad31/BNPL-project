@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import DevPanel from './DevPanel';
+import { IconNexaLogo } from './Icons';
 import { useTheme } from '../context/ThemeContext';
 import { useResponsive } from '../hooks/useResponsive';
 
@@ -45,19 +46,7 @@ export default function Layout() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div
-              style={{
-                width: 32,
-                height: 32,
-                borderRadius: 10,
-                background: 'linear-gradient(135deg, #F97316, #EA580C)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <span style={{ color: 'white', fontWeight: 700, fontSize: 14 }}>T</span>
-            </div>
+            <IconNexaLogo size={32} />
             <span style={{ fontWeight: 700, color: theme.text, fontSize: 15 }}>NexaPay</span>
             {!isMobile && (
               <>
